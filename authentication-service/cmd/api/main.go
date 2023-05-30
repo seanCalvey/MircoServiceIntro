@@ -7,6 +7,11 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"time"
+
+	_ "github.com/jackc/pgconn"
+	_ "github.com/jackc/pgx/v4"
+	_ "github.com/jackc/pgx/v4/stdlib"
 )
 
 const webPort = "80"
@@ -21,10 +26,15 @@ type Config struct {
 func main() {
 	log.Println("Starting Authentication service")
 
-	// TODO: connect to DB
+	conn := connectToDB()
+	if conn == nil {
+		log.Panic("Can't connect to Postgres")
+	}
 
-	// TODO: set up config
-	app := Config{}
+	app := Config{
+		DB:     conn,
+		Models: data.New(conn),
+	}
 
 	// TODO: set up web server
 	srv := &http.Server{
@@ -39,7 +49,7 @@ func main() {
 	}
 }
 
-func openDB(dsn string) (*sql.DB, error)  {
+func openDB(dsn string) (*sql.DB, error) {
 	db, err := sql.Open("pgx", dsn)
 	if err != nil {
 		return nil, err
@@ -54,7 +64,6 @@ func openDB(dsn string) (*sql.DB, error)  {
 	return db, nil
 }
 
-
 func connectToDB() *sql.DB {
 	dsn := os.Getenv("DSN")
 
@@ -68,6 +77,13 @@ func connectToDB() *sql.DB {
 			return connection
 		}
 
-		if counts
+		if counts > 10 {
+			log.Println(err)
+			return nil
+		}
+
+		log.Println("Backing off for two seconds ...")
+		time.Sleep(2 * time.Second)
+		continue
 	}
 }

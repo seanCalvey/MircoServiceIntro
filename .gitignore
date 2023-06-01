@@ -1,0 +1,6 @@
+/project/db-data/
+
+# binarys files
+/authentication-service/authApp
+/broker-service/brokerApp
+

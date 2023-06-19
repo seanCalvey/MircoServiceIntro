@@ -3,4 +3,10 @@
 # binarys files
 /authentication-service/authApp
 /broker-service/brokerApp
+/logger-service/loggerServiceApp
 
+
+# general files
+*.xml
+go.sum
+*.iml

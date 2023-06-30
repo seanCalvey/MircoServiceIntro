@@ -4,6 +4,8 @@
 /authentication-service/authApp
 /broker-service/brokerApp
 /logger-service/loggerServiceApp
+/front-end/frontApp.exe
+/mail-service/mailServiceApp
 
 
 # general files

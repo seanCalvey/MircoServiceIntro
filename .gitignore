@@ -6,6 +6,7 @@
 /logger-service/loggerServiceApp
 /front-end/frontApp.exe
 /mail-service/mailServiceApp
+/listener-service/listenerApp
 
 
 # general files
